@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SkillLink Debug</title>
+    <style>
+      body { margin: 0; padding: 20px; font-family: sans-serif; background: #f0f0f0; }
+      #root { background: white; padding: 20px; min-height: 300px; }
+      .error { color: red; padding: 10px; background: #fee; border: 2px solid red; margin: 10px 0; }
+      .success { color: green; padding: 10px; background: #efe; border: 2px solid green; margin: 10px 0; }
+    </style>
+  </head>
+  <body>
+    <h1>SkillLink Debug</h1>
+    <div id="status">Loading...</div>
+    <div id="root"></div>
+    <script type="module">
+      const status = document.getElementById('status');
+      const root = document.getElementById('root');
+      
+      try {
+        status.innerHTML = '<div class="success">Step 1: Script executing</div>';
+        
+        // Import React
+        const React = await import('/node_modules/.vite/deps/react.js?v=6493c606');
+        status.innerHTML += '<div class="success">Step 2: React imported</div>';
+        
+        // Import ReactDOM
+        const ReactDOM = await import('/node_modules/.vite/deps/react-dom_client.js?v=6493c606');
+        status.innerHTML += '<div class="success">Step 3: ReactDOM imported</div>';
+        
+        // Import BrowserRouter
+        const RouterModule = await import('/node_modules/.vite/deps/react-router-dom.js?v=6493c606');
+        status.innerHTML += '<div class="success">Step 4: Router imported</div>';
+        
+        // Import main app files
+        const mainModule = await import('/src/main.jsx');
+        status.innerHTML += '<div class="success">Step 5: main.jsx loaded successfully!</div>';
+        
+      } catch (error) {
+        status.innerHTML += '<div class="error">ERROR: ' + error.message + '<br><pre>' + error.stack + '</pre></div>';
+        console.error('Error:', error);
+      }
+    </script>
+  </body>
+</html>

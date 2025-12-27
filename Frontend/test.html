@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Test Page</title>
+  <style>
+    body { margin: 0; padding: 20px; font-family: sans-serif; }
+  </style>
+</head>
+<body>
+  <h1>Test - If you see this, HTML works</h1>
+  <div id="root">Root div is here</div>
+  <script type="module">
+    console.log('JavaScript is working');
+    import React from 'http://localhost:5173/node_modules/.vite/deps/react.js?v=6493c606';
+    console.log('React loaded:', React);
+    document.getElementById('root').innerHTML = '<p style="color: red; font-size: 24px;">React module loaded!</p>';
+  </script>
+</body>
+</html>
