@@ -10,7 +10,22 @@ module.exports = {
 
     io = require('socket.io')(httpServer, {
       cors: {
-        origin: allowedOrigins,
+        origin: function(origin, callback) {
+          // Allow requests with no origin
+          if (!origin) return callback(null, true);
+          
+          // Allow all Vercel deployments
+          if (origin.includes('.vercel.app')) {
+            return callback(null, true);
+          }
+          
+          // Allow configured origins
+          if (allowedOrigins.indexOf(origin) !== -1) {
+            return callback(null, true);
+          }
+          
+          callback(new Error('Not allowed by CORS'));
+        },
         methods: ['GET', 'POST'],
         credentials: true
       }
